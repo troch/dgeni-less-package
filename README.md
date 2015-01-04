@@ -1,3 +1,5 @@
+Currently in development. I will provide more documentation and examples.
+
 dgeni-less-package
 ==================
 
