@@ -19,7 +19,7 @@ module.exports = function lessFileReader(log) {
         .split('\n');
 
       /**
-       * Reduce comment lines to comment blocks
+       * Reduce lines to comment blocks
        */
       fileInfo.comments = _.reduce(commentLines, function (commentBlocks, commentLine) {
         if (COMMENT_START.test(commentLine)) {
@@ -28,9 +28,11 @@ module.exports = function lessFileReader(log) {
           return commentBlocks;
         }
         if (isComment) {
-          commentBlocks[commentBlocks.length - 1].push(commentLine);
           if (COMMENT_END.test(commentLine)) {
+            commentBlocks[commentBlocks.length - 1].push('*');
             isComment = false;
+          } else {
+            commentBlocks[commentBlocks.length - 1].push(commentLine);
           }
         }
         return commentBlocks;
