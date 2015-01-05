@@ -8,7 +8,7 @@ var lessPackage = module.exports = new Package('less', [
 
 // Add LESS file reader and comment extractor
 lessPackage.factory(require('./file-readers/less'));
-lessPackage.factory(require('./processors/extract-less-comments'));
+lessPackage.processor(require('./processors/extract-less-comments'));
 
 // Configure package
 lessPackage.config(function (log, readFilesProcessor, parseTagsProcessor, lessFileReader) {
