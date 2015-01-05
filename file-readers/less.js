@@ -12,32 +12,26 @@ module.exports = function lessFileReader(log) {
     name: 'lessFileReader',
     defaultPattern: /\.less$/,
     getDocs: function(fileInfo) {
-      var isComment = true;
+      var isComment = false;
       var commentLines = String(fileInfo.content)
         .trim()
         .replace(/\r\n|\r|\n *\n/g, '\n')
-        .split('\n')
-        .filter(function (line) {
-          if (COMMENT_START.test(line)) {
-            isComment = true;
-            return true;
-          }
-          if (COMMENT_END.test(line)) {
-            isComment = false;
-            return true;
-          }
-          return isComment;
-          // return /^\s*(\*|\/\*)/.test(line);
-        });
+        .split('\n');
 
       /**
        * Reduce comment lines to comment blocks
        */
       fileInfo.comments = _.reduce(commentLines, function (commentBlocks, commentLine) {
         if (COMMENT_START.test(commentLine)) {
-            commentBlocks.push(['*']);
-        } else {//if (!COMMENT_END.test(commentLine)) {
+          isComment = true;
+          commentBlocks.push(['*']);
+          return commentBlocks;
+        }
+        if (isComment) {
           commentBlocks[commentBlocks.length - 1].push(commentLine);
+          if (COMMENT_END.test(commentLine)) {
+            isComment = false;
+          }
         }
         return commentBlocks;
       }, []).map(function (block) {
