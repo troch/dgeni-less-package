@@ -1,3 +1,4 @@
+BETA (npm versions are not getting tagged on GitHub)
 Currently in development. I will provide more documentation and examples.
 
 dgeni-less-package

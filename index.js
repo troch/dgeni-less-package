@@ -1,5 +1,4 @@
 var Package = require('dgeni').Package,
-  path = require('canonical-path'),
   _ = require('lodash');
 
 // Create a new Dgeni package called less based on the jsdoc package from dgeni-packaes
